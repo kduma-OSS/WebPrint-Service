@@ -1,27 +1,26 @@
 {
-    "name": "laravel-zero/laravel-zero",
-    "description": "The Laravel Zero Framework.",
-    "keywords": ["framework", "laravel", "laravel zero", "console", "cli"],
-    "homepage": "https://laravel-zero.com",
-    "type": "project",
+    "name": "kduma/webprint-service-cli",
+    "description": "WebPrint Local Host Service",
+    "keywords": ["webprint", "service", "cli"],
+    "type": "library",
     "license": "MIT",
-    "support": {
-        "issues": "https://github.com/laravel-zero/laravel-zero/issues",
-        "source": "https://github.com/laravel-zero/laravel-zero"
-    },
     "authors": [
         {
-            "name": "Nuno Maduro",
-            "email": "enunomaduro@gmail.com"
+            "name": "Krystian Duma",
+            "email": "git@krystian.duma.sh"
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
-        "laravel-zero/framework": "^8.4"
+        "php": "^8.0",
+        "ext-zlib": "*"
     },
     "require-dev": {
         "mockery/mockery": "^1.4.2",
-        "pestphp/pest": "^1.0"
+        "pestphp/pest": "^1.0",
+        "guzzlehttp/guzzle": "^6.5.5",
+        "illuminate/http": "^8.0",
+        "kduma/lpd": "^0.1.0",
+        "laravel-zero/framework": "^8.4"
     },
     "autoload": {
         "psr-4": {
@@ -40,5 +39,5 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "bin": ["application"]
+    "bin": ["builds/webprint-service"]
 }

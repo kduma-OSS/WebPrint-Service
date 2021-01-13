@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Api\HttpWebPrintHost;
+use App\Api\WebPrintHostInterface;
+use App\PollingCalculators\DynamicPollTime;
+use App\PollingCalculators\PollTimeCalculatorInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(WebPrintHostInterface::class, function ($app) {
+            return new HttpWebPrintHost();
+        });
+
+        $this->app->singleton(PollTimeCalculatorInterface::class, function ($app) {
+            return new DynamicPollTime();
+        });
     }
 }
