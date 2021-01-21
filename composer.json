@@ -12,7 +12,8 @@
     ],
     "require": {
         "php": "^8.0",
-        "ext-zlib": "*"
+        "ext-zlib": "*",
+        "brick/varexporter": "^0.3.3"
     },
     "require-dev": {
         "mockery/mockery": "^1.4.2",
