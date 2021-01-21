@@ -68,7 +68,7 @@ class ParsePpdOptionsFromPpdFileCommand extends Command
 
 
             if($cmd[1] == 'OpenGroup'){
-                preg_match('/^\\*([a-zA-Z0-9-_]+): ([a-zA-Z0-9-_]+)\/([^\\n]+)/um', $value, $group);
+                preg_match('/^\\*([a-zA-Z0-9-_]+): ([a-zA-Z0-9-_ ]+)\/([^\\n]+)/um', $value, $group);
                 $currentGroup = [$group[2], $group[3]];
             }
 
