@@ -44,6 +44,7 @@ class ParsePpdOptionsFromPpdFileCommand extends Command
 
                 if(!isset($options_array[$openUI[2]]))
                     $options_array[$openUI[2]] = [
+                        'key' => $openUI[2],
                         'name' => $openUI[3],
                         'values' => [],
                         'default' => null,
@@ -85,6 +86,7 @@ class ParsePpdOptionsFromPpdFileCommand extends Command
             $order = 1;
             foreach ($option['values'] as $key => $value) {
                 $new_values[$key] = [
+                    'key' => $key,
                     'name' => $value,
                     'order' => $order++,
                     'enabled' => true,
