@@ -1,4 +1,4 @@
-FROM php:8.1-cli AS builder
+FROM --platform=$BUILDPLATFORM php:8.1-cli AS builder
 
 ARG BUILD_VERSION=docker
 
