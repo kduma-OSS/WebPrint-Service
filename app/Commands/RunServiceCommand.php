@@ -14,7 +14,6 @@ use App\Printers\Protocols\DebugProtocol;
 use App\Printers\Protocols\LpdProtocol;
 use App\Printers\Protocols\PrinterProtocolInterface;
 use App\Printers\Protocols\RawProtocol;
-use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
 class RunServiceCommand extends Command
@@ -38,9 +37,9 @@ class RunServiceCommand extends Command
      *
      * @param  WebPrintHostInterface  $api
      * @param  PollTimeCalculatorInterface  $ptc
-     * @return mixed
+     * @return never
      */
-    public function handle(WebPrintHostInterface $api, PollTimeCalculatorInterface $ptc)
+    public function handle(WebPrintHostInterface $api, PollTimeCalculatorInterface $ptc): never
     {
         while (true) {
             $this->line('Checking for new jobs...');
@@ -95,16 +94,5 @@ class RunServiceCommand extends Command
             $this->error('Content type not supported.');
             $api->markJobAsFailed($id, 'TypeNotSupportedException');
         }
-    }
-
-    /**
-     * Define the command's schedule.
-     *
-     * @param  Schedule  $schedule
-     * @return void
-     */
-    public function schedule(Schedule $schedule): void
-    {
-        // $schedule->command(static::class)->everyMinute();
     }
 }

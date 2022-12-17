@@ -16,11 +16,11 @@ class DynamicPollTime implements PollTimeCalculatorInterface
      * @param  float  $warmup_factor   WarmUp factor
      */
     public function __construct(
-        protected int $minimum = 1000,
-        protected int $maximum = 60000,
-        protected float $increase_factor = 1.02,
-        protected float $decrease_factor = 0,
-        protected float $warmup_factor = 0,
+        protected readonly int $minimum = 1000,
+        protected readonly int $maximum = 60000,
+        protected readonly float $increase_factor = 1.02,
+        protected readonly float $decrease_factor = 0,
+        protected readonly float $warmup_factor = 0,
     ) {
         $this->current_delay = $this->minimum;
     }
