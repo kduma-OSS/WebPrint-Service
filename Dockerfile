@@ -1,5 +1,7 @@
 FROM php:8.1-cli AS builder
 
+ARG build-version=docker
+
 RUN apt-get update \
 	&& apt-get -y install wget unzip \
     && apt-get -y autoremove \
@@ -16,7 +18,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN composer install --no-interaction --no-progress --no-scripts --optimize-autoloader --ignore-platform-req=ext-sockets
 
-RUN ./webprint-service app:build  --build-version=docker --ansi -vvv
+RUN ./webprint-service app:build --build-version=${build-version} --ansi -vvv
 
 
 FROM php:8.1-cli AS runtime
