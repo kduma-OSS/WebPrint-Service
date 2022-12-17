@@ -43,7 +43,8 @@
         }
     },
     "scripts": {
-        "pint": "@php vendor/bin/pint -v"
+        "pint": "@php vendor/bin/pint -v",
+        "test-pint": "@php vendor/bin/pint -v --test"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
