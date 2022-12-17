@@ -89,8 +89,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: BUILD_VERSION=${{ env.TAG }}
-
-
+          platforms: |
+              amd64
+              arm32v7
+              arm64v8
 #      # Sign the resulting Docker image digest except on PRs.
 #      # This will only write to the public Rekor transparency log when the Docker
 #      # repository is public to avoid leaking data.  If you would like to publish
