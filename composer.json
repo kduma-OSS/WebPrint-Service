@@ -13,15 +13,15 @@
     "require": {
         "php": "^8.1",
         "ext-zlib": "*",
-        "brick/varexporter": "^0.3.3"
-    },
-    "require-dev": {
-        "mockery/mockery": "^1.4.2",
-        "pestphp/pest": "^1.0",
+        "brick/varexporter": "^0.3.3",
         "guzzlehttp/guzzle": "^7.4",
         "illuminate/http": "^9.0",
         "kduma/lpd": "^0.1.0",
         "laravel-zero/framework": "^9.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4.2",
+        "pestphp/pest": "^1.0"
     },
     "autoload": {
         "psr-4": {
