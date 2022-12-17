@@ -5,13 +5,13 @@ namespace App\Api;
 class JobModel
 {
     public function __construct(
-        public string $id,
-        public string $name,
-        public string $printer,
-        public array $options,
-        public string $type,
-        public string $file_name,
-        public mixed $content,
+        public readonly string $id,
+        public readonly string $name,
+        public readonly string $printer,
+        public readonly array $options,
+        public readonly string $type,
+        public readonly string $file_name,
+        public readonly mixed $content,
     ) {
     }
 }
