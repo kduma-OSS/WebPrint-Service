@@ -26,5 +26,3 @@ services:
       - 631
     ports:
       - "6310:631"
-#    profiles:
-#      - debug
