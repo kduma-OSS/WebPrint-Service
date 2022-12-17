@@ -1,12 +1,8 @@
 <?php
 
-
 namespace App\Printers\Protocols;
 
-
 use App\Api\JobModel;
-use App\Exceptions\PrintFailedException;
-use App\Exceptions\TypeNotSupportedException;
 use Illuminate\Support\Str;
 
 class DebugProtocol implements PrinterProtocolInterface
@@ -39,17 +35,18 @@ class DebugProtocol implements PrinterProtocolInterface
     protected function getDirectories(string $id, string $file_name)
     {
         $extension = Str::slug(pathinfo($file_name, PATHINFO_EXTENSION));
-        if(!$extension)
-            $extension =  'txt';
+        if (! $extension) {
+            $extension = 'txt';
+        }
 
-        $prefix = sprintf("%s/%s_%s_%s", config('debug.dir'), time(), $id, Str::slug(pathinfo($file_name, PATHINFO_FILENAME)));
+        $prefix = sprintf('%s/%s_%s_%s', config('debug.dir'), time(), $id, Str::slug(pathinfo($file_name, PATHINFO_FILENAME)));
         $counter = 0;
 
         $name = $prefix.'_manifest.txt';
-        $contents = $prefix .'.'.$extension;
-        while (file_exists($name)){
-            $name = sprintf("%s_%s_manifest.txt", $prefix, str_pad(++$counter, 4, '0', STR_PAD_LEFT));
-            $contents = sprintf("%s_%s.%s", $prefix, str_pad($counter, 4, '0', STR_PAD_LEFT), $extension);
+        $contents = $prefix.'.'.$extension;
+        while (file_exists($name)) {
+            $name = sprintf('%s_%s_manifest.txt', $prefix, str_pad(++$counter, 4, '0', STR_PAD_LEFT));
+            $contents = sprintf('%s_%s.%s', $prefix, str_pad($counter, 4, '0', STR_PAD_LEFT), $extension);
         }
 
         return [$name, $contents];

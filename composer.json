@@ -20,6 +20,7 @@
         "laravel-zero/framework": "^9.0"
     },
     "require-dev": {
+        "laravel/pint": "^1.2",
         "mockery/mockery": "^1.4.2",
         "pestphp/pest": "^1.0"
     },
@@ -40,6 +41,10 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "scripts": {
+        "pint": "@php vendor/bin/pint -v",
+        "test-pint": "@php vendor/bin/pint -v --test"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

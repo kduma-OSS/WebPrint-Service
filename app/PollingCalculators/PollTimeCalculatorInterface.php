@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\PollingCalculators;
-
 
 interface PollTimeCalculatorInterface
 {
@@ -14,7 +12,7 @@ interface PollTimeCalculatorInterface
     /**
      * Receive information from runner about last call results
      *
-     * @param int $new_jobs_received count of received jobs (0 if none)
+     * @param  int  $new_jobs_received count of received jobs (0 if none)
      */
     public function markAttempt(int $new_jobs_received): void;
 

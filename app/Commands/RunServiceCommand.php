@@ -3,8 +3,8 @@
 namespace App\Commands;
 
 use App\Api\Exceptions\JobLockedException;
-use App\Api\WebPrintHostInterface;
 use App\Api\Exceptions\JobNotFoundException;
+use App\Api\WebPrintHostInterface;
 use App\Exceptions\PrintFailedException;
 use App\Exceptions\ProtocolNotSupportedException;
 use App\Exceptions\TypeNotSupportedException;
@@ -36,18 +36,17 @@ class RunServiceCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param WebPrintHostInterface       $api
-     * @param PollTimeCalculatorInterface $ptc
-     *
+     * @param  WebPrintHostInterface  $api
+     * @param  PollTimeCalculatorInterface  $ptc
      * @return mixed
      */
     public function handle(WebPrintHostInterface $api, PollTimeCalculatorInterface $ptc)
     {
-        while(true){
+        while (true) {
             $this->line('Checking for new jobs...');
             $new_jobs = $api->checkForNewJobs();
 
-            if(!$new_jobs) {
+            if (! $new_jobs) {
                 $this->line('No new jobs.');
             } else {
                 $this->info('Found '.count($new_jobs).' job(s).');
@@ -101,7 +100,7 @@ class RunServiceCommand extends Command
     /**
      * Define the command's schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     * @param  Schedule  $schedule
      * @return void
      */
     public function schedule(Schedule $schedule): void

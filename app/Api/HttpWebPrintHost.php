@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Api;
-
 
 use App\Api\Exceptions\ApiErrorException;
 use App\Api\Exceptions\JobNotFoundException;
@@ -14,15 +12,14 @@ use const null;
 class HttpWebPrintHost implements WebPrintHostInterface
 {
     private string $endpoint;
-    private string $token;
 
+    private string $token;
 
     public function __construct()
     {
         $this->endpoint = Str::finish(config('api.endpoint'), '/');
         $this->token = config('api.key');
     }
-
 
     public function checkForNewJobs(): array
     {
@@ -35,11 +32,13 @@ class HttpWebPrintHost implements WebPrintHostInterface
                 $this->endpoint.'jobs'
             );
 
-        if($response->status() == 404)
+        if ($response->status() == 404) {
             throw new JobNotFoundException();
+        }
 
-        if(!$response->successful())
+        if (! $response->successful()) {
             throw new ApiErrorException($response->body(), $response->status());
+        }
 
         return $response->json();
     }
@@ -51,13 +50,14 @@ class HttpWebPrintHost implements WebPrintHostInterface
             ->withHeaders([
                 'Accept' => 'application/json',
             ])
-            ->get($this->endpoint . 'jobs/' . $id);
+            ->get($this->endpoint.'jobs/'.$id);
 
         $job = $response->json();
 
         $response = $this->updateStatus($id, 'printing');
-        if(!$response->successful())
+        if (! $response->successful()) {
             throw new ApiErrorException($response->body(), $response->status());
+        }
 
         try {
             $content = match ($job['content_type']) {
@@ -68,8 +68,9 @@ class HttpWebPrintHost implements WebPrintHostInterface
             };
         } catch (ApiErrorException $e) {
             $response = $this->updateStatus($id, 'failed', $e->getMessage());
-            if(!$response->successful())
+            if (! $response->successful()) {
                 throw new ApiErrorException($response->body(), $response->status());
+            }
 
             throw $e;
         }
@@ -85,24 +86,6 @@ class HttpWebPrintHost implements WebPrintHostInterface
         );
     }
 
-
-    public function markJobAsDone(string $id): void
-    {
-        $response = $this->updateStatus($id, 'finished');
-
-        if(!$response->successful())
-            throw new ApiErrorException($response->body(), $response->status());
-    }
-
-
-    public function markJobAsFailed(string $id, string $error): void
-    {
-        $response = $this->updateStatus($id, 'failed', $error);
-
-        if(!$response->successful())
-            throw new ApiErrorException($response->body(), $response->status());
-    }
-
     protected function updateStatus(string $id, string $status, ?string $message = null): Response
     {
         return Http::timeout(60)
@@ -111,11 +94,29 @@ class HttpWebPrintHost implements WebPrintHostInterface
                 'Accept' => 'application/json',
             ])
             ->put(
-                $this->endpoint . 'jobs/' . $id,
+                $this->endpoint.'jobs/'.$id,
                 [
-                    'status'         => $status,
+                    'status' => $status,
                     'status_message' => $message,
                 ]
             );
+    }
+
+    public function markJobAsDone(string $id): void
+    {
+        $response = $this->updateStatus($id, 'finished');
+
+        if (! $response->successful()) {
+            throw new ApiErrorException($response->body(), $response->status());
+        }
+    }
+
+    public function markJobAsFailed(string $id, string $error): void
+    {
+        $response = $this->updateStatus($id, 'failed', $error);
+
+        if (! $response->successful()) {
+            throw new ApiErrorException($response->body(), $response->status());
+        }
     }
 }

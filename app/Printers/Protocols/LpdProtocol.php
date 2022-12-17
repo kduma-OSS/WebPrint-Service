@@ -1,12 +1,11 @@
 <?php
 
-
 namespace App\Printers\Protocols;
-
 
 use App\Api\JobModel;
 use App\Exceptions\PrintFailedException;
 use App\Exceptions\TypeNotSupportedException;
+use ErrorException;
 use KDuma\LPD\Client\Configuration;
 use KDuma\LPD\Client\Exceptions\InvalidJobException;
 use KDuma\LPD\Client\Exceptions\PrintErrorException;
@@ -21,7 +20,7 @@ class LpdProtocol implements PrinterProtocolInterface
     }
 
     /**
-     * @param JobModel $job
+     * @param  JobModel  $job
      *
      * @throws PrintFailedException
      * @throws TypeNotSupportedException
@@ -31,9 +30,9 @@ class LpdProtocol implements PrinterProtocolInterface
         $url = parse_url($job->printer);
         parse_str($url['query'] ?? '', $query);
 
-        switch ($job->type){
+        switch ($job->type) {
             case 'raw':
-                $queue = isset($url['path'])  && trim($url['path'], '\\/') ? trim($url['path'], '\\/') : null;
+                $queue = isset($url['path']) && trim($url['path'], '\\/') ? trim($url['path'], '\\/') : null;
 
                 $print_service = new PrintService(new Configuration(
                     $url['host'],
@@ -51,8 +50,8 @@ class LpdProtocol implements PrinterProtocolInterface
                         $tries = 0;
                     } catch (InvalidJobException $e) {
                         throw new PrintFailedException($e->getMessage());
-                    } catch (\ErrorException | PrintErrorException $e) {
-                        if($tries) {
+                    } catch (ErrorException|PrintErrorException $e) {
+                        if ($tries) {
                             usleep(100000);
                             dump($e->getMessage());
                         } else {
@@ -60,7 +59,6 @@ class LpdProtocol implements PrinterProtocolInterface
                         }
                     }
                 } while ($tries);
-
 
                 break;
             default:

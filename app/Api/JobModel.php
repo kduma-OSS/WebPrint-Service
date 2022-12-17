@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Api;
-
 
 class JobModel
 {
@@ -14,6 +12,6 @@ class JobModel
         public string $type,
         public string $file_name,
         public mixed $content,
-    )
-    {}
+    ) {
+    }
 }

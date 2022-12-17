@@ -1,5 +1,7 @@
 <?php
 
+use Composer\InstalledVersions;
+
 return [
 
     /*
@@ -26,7 +28,7 @@ return [
     |
     */
 
-    'version' => app('git.version') != 'unreleased' ? app('git.version') : \Composer\InstalledVersions::getPrettyVersion('kduma/webprint-service-cli'),
+    'version' => app('git.version') != 'unreleased' ? app('git.version') : InstalledVersions::getPrettyVersion('kduma/webprint-service-cli'),
 
     /*
     |--------------------------------------------------------------------------
