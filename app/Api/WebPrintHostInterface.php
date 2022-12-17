@@ -9,11 +9,12 @@ use App\Api\Exceptions\JobNotFoundException;
 interface WebPrintHostInterface
 {
     /**
+     * @param  bool  $long_polling
      * @return string[]
      *
      * @throws ApiErrorException
      */
-    public function checkForNewJobs(): array;
+    public function checkForNewJobs(bool $long_polling = true): array;
 
     /**
      * @param  string  $id Job ID

@@ -44,7 +44,7 @@ class RunServiceCommand extends Command
     {
         while (true) {
             $this->line('Checking for new jobs...');
-            $new_jobs = $api->checkForNewJobs();
+            $new_jobs = $api->checkForNewJobs($ptc->shouldLongPoll());
 
             if (! $new_jobs) {
                 $this->line('No new jobs.');

@@ -20,4 +20,9 @@ interface PollTimeCalculatorInterface
      * Receive information from runner about warming up job queue
      */
     public function warmUp(): void;
+
+    /**
+     * Returns if long polling should be used for next call
+     */
+    public function shouldLongPoll(): bool;
 }
