@@ -2,8 +2,8 @@
 
 namespace App\Commands;
 
+use Brick\VarExporter\ExportException;
 use Brick\VarExporter\VarExporter;
-use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
 class ParsePpdOptionsFromPpdFileCommand extends Command
@@ -25,9 +25,11 @@ class ParsePpdOptionsFromPpdFileCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
+     *
+     * @throws ExportException
      */
-    public function handle()
+    public function handle(): int
     {
         $contents = array_map('trim', file($this->argument('file')));
         $options_array = [];
@@ -100,16 +102,7 @@ class ParsePpdOptionsFromPpdFileCommand extends Command
         } else {
             echo json_encode($options_array, JSON_PRETTY_PRINT);
         }
-    }
 
-    /**
-     * Define the command's schedule.
-     *
-     * @param  Schedule  $schedule
-     * @return void
-     */
-    public function schedule(Schedule $schedule): void
-    {
-        // $schedule->command(static::class)->everyMinute();
+        return self::SUCCESS;
     }
 }

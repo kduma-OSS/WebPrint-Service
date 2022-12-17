@@ -9,7 +9,7 @@ class ConstantPollTime implements PollTimeCalculatorInterface
      *
      * @param  int  $delay Delay in miliseconds between each check of new print jobs
      */
-    public function __construct(protected int $delay)
+    public function __construct(protected readonly int $delay)
     {
     }
 
