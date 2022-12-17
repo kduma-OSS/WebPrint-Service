@@ -1,10 +1,9 @@
 <?php
 
-
 namespace App\Api\Exceptions;
 
+use Exception;
 
-class JobNotFoundException extends \Exception
+class JobNotFoundException extends Exception
 {
-
 }

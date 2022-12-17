@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Api;
-
 
 use App\Api\Exceptions\ApiErrorException;
 use App\Api\Exceptions\JobLockedException;
@@ -18,8 +16,7 @@ interface WebPrintHostInterface
     public function checkForNewJobs(): array;
 
     /**
-     * @param string $id Job ID
-     *
+     * @param  string  $id Job ID
      * @return JobModel
      *
      * @throws JobNotFoundException
@@ -29,8 +26,7 @@ interface WebPrintHostInterface
     public function getJob(string $id): JobModel;
 
     /**
-     * @param string $id Job ID
-     *
+     * @param  string  $id Job ID
      * @return void
      *
      * @throws ApiErrorException
@@ -38,9 +34,8 @@ interface WebPrintHostInterface
     public function markJobAsDone(string $id): void;
 
     /**
-     * @param string $id Job ID
-     * @param string $error Error ID
-     *
+     * @param  string  $id    Job ID
+     * @param  string  $error Error ID
      * @return void
      *
      * @throws ApiErrorException

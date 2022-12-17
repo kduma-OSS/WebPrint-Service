@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Printers\Protocols;
-
 
 use App\Api\JobModel;
 

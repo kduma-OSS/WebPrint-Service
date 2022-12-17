@@ -1,10 +1,6 @@
 <?php
 
-
 namespace App\Api;
-
-
-use App\Api\Exceptions\JobNotFoundException;
 
 class DummyWebPrintHost implements WebPrintHostInterface
 {
@@ -12,7 +8,7 @@ class DummyWebPrintHost implements WebPrintHostInterface
     {
         static $count = 0;
 
-        if($count++ == 0){
+        if ($count++ == 0) {
             return ['fake_id'];
         }
 
@@ -38,7 +34,7 @@ class DummyWebPrintHost implements WebPrintHostInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function markJobAsFailed(string $id, string $error): void
     {

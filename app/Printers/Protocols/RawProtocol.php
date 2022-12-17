@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Printers\Protocols;
-
 
 use App\Api\JobModel;
 use App\Exceptions\PrintFailedException;
@@ -16,7 +14,7 @@ class RawProtocol implements PrinterProtocolInterface
     }
 
     /**
-     * @param JobModel $job
+     * @param  JobModel  $job
      *
      * @throws PrintFailedException
      * @throws TypeNotSupportedException
@@ -26,7 +24,7 @@ class RawProtocol implements PrinterProtocolInterface
         $url = parse_url($job->printer);
         parse_str($url['query'] ?? '', $query);
 
-        switch ($job->type){
+        switch ($job->type) {
             case 'raw':
                 dump($url, $query);
 
@@ -38,7 +36,7 @@ class RawProtocol implements PrinterProtocolInterface
 
                 if ($socket === false) {
                     dump($errno, $errstr);
-                    throw new PrintFailedException("Cannot initialise NetworkPrintConnector: " . $errstr);
+                    throw new PrintFailedException('Cannot initialise NetworkPrintConnector: '.$errstr);
                 }
 
                 fwrite($socket, $job->content);
