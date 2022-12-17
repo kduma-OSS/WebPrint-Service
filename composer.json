@@ -11,17 +11,17 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-zlib": "*",
         "brick/varexporter": "^0.3.3"
     },
     "require-dev": {
         "mockery/mockery": "^1.4.2",
         "pestphp/pest": "^1.0",
-        "guzzlehttp/guzzle": "^6.5.5",
-        "illuminate/http": "^8.0",
+        "guzzlehttp/guzzle": "^7.4",
+        "illuminate/http": "^9.0",
         "kduma/lpd": "^0.1.0",
-        "laravel-zero/framework": "^8.4"
+        "laravel-zero/framework": "^9.0"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +36,10 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
