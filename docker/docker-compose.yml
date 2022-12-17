@@ -1,9 +1,9 @@
 version: "3.9"
 services:
   service:
-    image: webprint/service:latest
-    restart: always
     build: ..
+    image: ghcr.io/kduma-oss/webprint-service
+    restart: always
     environment:
       - WEBPRINT_SERVER_ENDPOINT=${WEBPRINT_SERVER_ENDPOINT}
       - WEBPRINT_SERVICE_KEY=${WEBPRINT_SERVICE_KEY}
