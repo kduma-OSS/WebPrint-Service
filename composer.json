@@ -42,6 +42,9 @@
             "pestphp/pest-plugin": true
         }
     },
+    "scripts": {
+        "pint": "@php vendor/bin/pint -v"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "bin": ["webprint-service"]
