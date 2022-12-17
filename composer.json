@@ -44,7 +44,8 @@
     },
     "scripts": {
         "pint": "@php vendor/bin/pint -v",
-        "test-pint": "@php vendor/bin/pint -v --test"
+        "test-pint": "@php vendor/bin/pint -v --test",
+        "test-pest": "@php webprint-service test"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
