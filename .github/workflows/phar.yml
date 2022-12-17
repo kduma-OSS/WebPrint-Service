@@ -44,11 +44,11 @@ jobs:
 
       - name: Build PHAR archive
         if:   startsWith(github.ref, 'refs/tags/')
-        run: php webprint-service app:build --env=development --build-version=${{ env.TAG }}
+        run: php webprint-service app:build --build-version=${{ env.TAG }}
 
       - name: Build PHAR archive
         if:   ${{ !startsWith(github.ref, 'refs/tags/') }}
-        run: php webprint-service app:build --env=development --build-version=$(git rev-parse --short "$GITHUB_SHA")
+        run: php webprint-service app:build --build-version=$(git rev-parse --short "$GITHUB_SHA")
 
       - name: Rename phar
         run: mv builds/webprint-service builds/webprint-service.phar
