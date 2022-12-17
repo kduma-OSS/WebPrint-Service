@@ -82,7 +82,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args:
-            build-version: ${{ env.TAG }}
+            - build-version: ${{ env.TAG }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -98,7 +98,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args:
-            build-version: $(git rev-parse --short "$GITHUB_SHA")
+            - build-version: $(git rev-parse --short "$GITHUB_SHA")
 
 
 #      # Sign the resulting Docker image digest except on PRs.
