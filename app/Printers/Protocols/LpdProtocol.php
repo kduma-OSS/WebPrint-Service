@@ -21,27 +21,25 @@ class LpdProtocol implements PrinterProtocolInterface
 
     /**
      * @param  JobModel  $job
+     * @param  array  $options
      *
      * @throws PrintFailedException
      * @throws TypeNotSupportedException
      */
-    public function print(JobModel $job): void
+    public function printJob(JobModel $job, array $options): void
     {
-        $url = parse_url($job->printer);
-        parse_str($url['query'] ?? '', $query);
-
         switch ($job->type) {
             case 'raw':
-                $queue = isset($url['path']) && trim($url['path'], '\\/') ? trim($url['path'], '\\/') : null;
+                $queue = isset($options['path']) && trim($options['path'], '\\/') ? trim($options['path'], '\\/') : null;
 
                 $print_service = new PrintService(new Configuration(
-                    $url['host'],
+                    $options['host'],
                     $queue ?? Configuration::DEFAULT_QUEUE_NAME,
-                    $url['port'] ?? Configuration::LPD_DEFAULT_PORT,
-                    $query['timeout'] ?? 60
+                    $options['port'] ?? Configuration::LPD_DEFAULT_PORT,
+                    $options['timeout'] ?? 60
                 ));
 
-                $tries = $query['tries'] ?? 1;
+                $tries = $options['tries'] ?? 1;
                 do {
                     $tries--;
 

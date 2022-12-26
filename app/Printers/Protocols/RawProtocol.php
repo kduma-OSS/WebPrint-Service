@@ -15,21 +15,19 @@ class RawProtocol implements PrinterProtocolInterface
 
     /**
      * @param  JobModel  $job
+     * @param  array  $options
      *
      * @throws PrintFailedException
      * @throws TypeNotSupportedException
      */
-    public function print(JobModel $job): void
+    public function printJob(JobModel $job, array $options): void
     {
-        $url = parse_url($job->printer);
-        parse_str($url['query'] ?? '', $query);
-
         switch ($job->type) {
             case 'raw':
-                if ($query['timeout'] ?? false) {
-                    $socket = @fsockopen($url['host'], $url['port'] ?? 9100, $errno, $errstr);
+                if ($options['timeout'] ?? false) {
+                    $socket = @fsockopen($options['host'], $options['port'] ?? 9100, $errno, $errstr);
                 } else {
-                    $socket = @fsockopen($url['host'], $url['port'] ?? 9100, $errno, $errstr, (float) $query['timeout']);
+                    $socket = @fsockopen($options['host'], $options['port'] ?? 9100, $errno, $errstr, (float) $options['timeout']);
                 }
 
                 if ($socket === false) {

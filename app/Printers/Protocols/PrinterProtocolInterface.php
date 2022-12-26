@@ -11,5 +11,5 @@ interface PrinterProtocolInterface
      */
     public function supportedTypes(): array;
 
-    public function print(JobModel $job): void;
+    public function printJob(JobModel $job, array $options): void;
 }
