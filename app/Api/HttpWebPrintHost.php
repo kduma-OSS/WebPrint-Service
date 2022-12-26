@@ -78,7 +78,7 @@ class HttpWebPrintHost implements WebPrintHostInterface
         }
 
         return new JobModel(
-            $job['uuid'],
+            $job['ulid'],
             $job['name'],
             $job['printer']['uri'],
             $job['options'] ?? [],
