@@ -26,8 +26,6 @@ class RawProtocol implements PrinterProtocolInterface
 
         switch ($job->type) {
             case 'raw':
-                dump($url, $query);
-
                 if ($query['timeout'] ?? false) {
                     $socket = @fsockopen($url['host'], $url['port'] ?? 9100, $errno, $errstr);
                 } else {
@@ -35,7 +33,6 @@ class RawProtocol implements PrinterProtocolInterface
                 }
 
                 if ($socket === false) {
-                    dump($errno, $errstr);
                     throw new PrintFailedException('Cannot initialise NetworkPrintConnector: '.$errstr);
                 }
 
