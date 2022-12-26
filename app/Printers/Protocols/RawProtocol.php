@@ -42,7 +42,7 @@ class RawProtocol implements PrinterProtocolInterface
                 break;
 
             default:
-                throw new TypeNotSupportedException;
+                throw new TypeNotSupportedException();
         }
     }
 }

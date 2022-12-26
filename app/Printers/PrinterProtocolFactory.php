@@ -27,7 +27,7 @@ class PrinterProtocolFactory
             'socket' => $this->makeSocketProtocol($options),
             'cups' => $this->makeCupsProtocol($options),
             'debug' => $this->makeDebugProtocol($options),
-            default => throw new ProtocolNotSupportedException,
+            default => throw new ProtocolNotSupportedException(),
         };
     }
 
@@ -81,7 +81,8 @@ class PrinterProtocolFactory
                             'Invalid value for option "%s". Value "%s" is not of type "%s".',
                             $key,
                             $value,
-                            $rule['type'])
+                            $rule['type']
+                        )
                     );
                 }
 
@@ -92,7 +93,8 @@ class PrinterProtocolFactory
                                 'Invalid value for option "%s". Value "%s" is less than minimum "%s".',
                                 $key,
                                 $value,
-                                $rule['min'])
+                                $rule['min']
+                            )
                         );
                     }
                 }

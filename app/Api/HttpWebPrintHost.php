@@ -7,6 +7,7 @@ use App\Api\Exceptions\JobNotFoundException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+
 use const null;
 
 class HttpWebPrintHost implements WebPrintHostInterface
@@ -29,7 +30,8 @@ class HttpWebPrintHost implements WebPrintHostInterface
                 'Accept' => 'application/json',
             ])
             ->get(
-                $this->endpoint.'jobs', [
+                $this->endpoint.'jobs',
+                [
                     'long_poll' => (int) $long_polling,
                 ]
             );

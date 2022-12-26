@@ -37,7 +37,7 @@ class CupsProtocol implements PrinterProtocolInterface
                 break;
 
             default:
-                throw new TypeNotSupportedException;
+                throw new TypeNotSupportedException();
         }
 
         // Build command to work on data

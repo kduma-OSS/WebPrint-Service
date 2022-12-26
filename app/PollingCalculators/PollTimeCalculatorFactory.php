@@ -134,7 +134,8 @@ class PollTimeCalculatorFactory
                             'Invalid value for option "%s". Value "%s" is not of type "%s".',
                             $key,
                             $value,
-                            $rule['type'])
+                            $rule['type']
+                        )
                     );
                 }
 
@@ -145,7 +146,8 @@ class PollTimeCalculatorFactory
                                 'Invalid value for option "%s". Value "%s" is less than minimum "%s".',
                                 $key,
                                 $value,
-                                $rule['min'])
+                                $rule['min']
+                            )
                         );
                     }
                 }
