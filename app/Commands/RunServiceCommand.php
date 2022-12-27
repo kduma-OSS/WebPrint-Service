@@ -9,12 +9,9 @@ use App\Exceptions\PrintFailedException;
 use App\Exceptions\ProtocolNotSupportedException;
 use App\Exceptions\TypeNotSupportedException;
 use App\PollingCalculators\PollTimeCalculatorInterface;
-use App\Printers\Protocols\CupsProtocol;
-use App\Printers\Protocols\DebugProtocol;
-use App\Printers\Protocols\LpdProtocol;
-use App\Printers\Protocols\PrinterProtocolInterface;
-use App\Printers\Protocols\RawProtocol;
+use App\Printers\PrinterProtocolFactory;
 use LaravelZero\Framework\Commands\Command;
+use ValueError;
 
 class RunServiceCommand extends Command
 {
@@ -39,11 +36,14 @@ class RunServiceCommand extends Command
      * @param  PollTimeCalculatorInterface  $ptc
      * @return never
      */
-    public function handle(WebPrintHostInterface $api, PollTimeCalculatorInterface $ptc): never
-    {
+    public function handle(
+        WebPrintHostInterface $api,
+        PollTimeCalculatorInterface $ptc,
+        PrinterProtocolFactory $protocolFactory,
+    ): never {
         while (true) {
             $this->line('Checking for new jobs...');
-            $new_jobs = $api->checkForNewJobs();
+            $new_jobs = $api->checkForNewJobs($ptc->shouldLongPoll());
 
             if (! $new_jobs) {
                 $this->line('No new jobs.');
@@ -52,7 +52,7 @@ class RunServiceCommand extends Command
             }
 
             foreach ($new_jobs as $job_id) {
-                $this->processJob($api, $job_id);
+                $this->processJob($api, $protocolFactory, $job_id);
             }
 
             $ptc->markAttempt(count($new_jobs));
@@ -60,23 +60,24 @@ class RunServiceCommand extends Command
         }
     }
 
-    private function processJob(WebPrintHostInterface $api, string $id)
-    {
+    private function processJob(
+        WebPrintHostInterface $api,
+        PrinterProtocolFactory $protocolFactory,
+        string $id
+    ): void {
         $this->info('Processing job with id='.$id);
 
         try {
             $job = $api->getJob($id);
 
-            /** @var PrinterProtocolInterface $handler */
-            $handler = app()->make(match (strtolower(parse_url($job->printer, PHP_URL_SCHEME))) {
-                'lpd' => LpdProtocol::class,
-                'socket' => RawProtocol::class,
-                'cups' => CupsProtocol::class,
-                'debug' => DebugProtocol::class,
-                default => throw new ProtocolNotSupportedException
-            });
+            [
+                'protocol' => $protocol,
+                'options' => $options,
+            ] = $protocolFactory->parse($job->printer);
 
-            $handler->print($job);
+            $handler = app()->make($protocol);
+
+            $handler->printJob($job, $options);
 
             $api->markJobAsDone($id);
             $this->info('Job processed!');
@@ -93,6 +94,9 @@ class RunServiceCommand extends Command
         } catch (TypeNotSupportedException) {
             $this->error('Content type not supported.');
             $api->markJobAsFailed($id, 'TypeNotSupportedException');
+        } catch (ValueError $e) {
+            $this->error($e->getMessage());
+            $api->markJobAsFailed($id, 'ValueError');
         }
     }
 }

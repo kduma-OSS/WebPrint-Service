@@ -4,7 +4,7 @@ namespace App\Api;
 
 class DummyWebPrintHost implements WebPrintHostInterface
 {
-    public function checkForNewJobs(): array
+    public function checkForNewJobs(bool $long_polling = true): array
     {
         static $count = 0;
 

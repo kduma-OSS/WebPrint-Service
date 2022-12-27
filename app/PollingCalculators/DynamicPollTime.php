@@ -16,11 +16,11 @@ class DynamicPollTime implements PollTimeCalculatorInterface
      * @param  float  $warmup_factor   WarmUp factor
      */
     public function __construct(
-        protected readonly int $minimum = 1000,
-        protected readonly int $maximum = 60000,
-        protected readonly float $increase_factor = 1.02,
-        protected readonly float $decrease_factor = 0,
-        protected readonly float $warmup_factor = 0,
+        public readonly int $minimum = 1000,
+        public readonly int $maximum = 60000,
+        public readonly float $increase_factor = 1.02,
+        public readonly float $decrease_factor = 0,
+        public readonly float $warmup_factor = 0,
     ) {
         $this->current_delay = $this->minimum;
     }
@@ -42,5 +42,10 @@ class DynamicPollTime implements PollTimeCalculatorInterface
     public function warmUp(): void
     {
         $this->current_delay = max($this->minimum, $this->current_delay * $this->warmup_factor);
+    }
+
+    public function shouldLongPoll(): bool
+    {
+        return false;
     }
 }

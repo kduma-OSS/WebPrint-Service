@@ -13,18 +13,15 @@ class CupsProtocol implements PrinterProtocolInterface
         return ['raw', 'ppd'];
     }
 
-    public function print(JobModel $job): void
+    public function printJob(JobModel $job, array $protocol_options): void
     {
-        $url = parse_url($job->printer);
-        parse_str($url['query'] ?? '', $query);
-
         $valid = $this->getLocalPrinters();
         if (count($valid) == 0) {
             throw new PrintFailedException("You do not have any printers installed on this system via CUPS. Check 'lpr -a'.");
         }
 
-        if (array_search($url['host'], $valid, true) === false) {
-            throw new PrintFailedException("'{$url['host']}' is not a printer on this system. Printers are: [".implode(', ', $valid).']');
+        if (array_search($protocol_options['host'], $valid, true) === false) {
+            throw new PrintFailedException("'{$protocol_options['host']}' is not a printer on this system. Printers are: [".implode(', ', $valid).']');
         }
 
         $options = collect();
@@ -52,7 +49,7 @@ class CupsProtocol implements PrinterProtocolInterface
 
         $cmd = sprintf(
             'lp -d %s %s %s',
-            escapeshellarg($url['host']),
+            escapeshellarg($protocol_options['host']),
             $options->map(fn ($value, $key) => '-o '.escapeshellarg($value !== null ? $key.'='.$value : $key))->implode(' '),
             escapeshellarg($tmpfname)
         );

@@ -12,11 +12,8 @@ class DebugProtocol implements PrinterProtocolInterface
         return ['raw', 'ppd'];
     }
 
-    public function print(JobModel $job): void
+    public function printJob(JobModel $job, array $options): void
     {
-        $url = parse_url($job->printer);
-        parse_str($url['query'] ?? '', $query);
-
         [$manifest_file, $content_file] = $this->getDirectories($job->id, $job->file_name);
 
         file_put_contents($manifest_file, json_encode([

@@ -21,7 +21,7 @@ class HttpWebPrintHost implements WebPrintHostInterface
         $this->token = config('api.key');
     }
 
-    public function checkForNewJobs(): array
+    public function checkForNewJobs(bool $long_polling = true): array
     {
         $response = Http::timeout(120)
             ->withToken($this->token)
@@ -29,7 +29,9 @@ class HttpWebPrintHost implements WebPrintHostInterface
                 'Accept' => 'application/json',
             ])
             ->get(
-                $this->endpoint.'jobs'
+                $this->endpoint.'jobs', [
+                    'long_poll' => (int) $long_polling,
+                ]
             );
 
         if ($response->status() == 404) {
@@ -76,7 +78,7 @@ class HttpWebPrintHost implements WebPrintHostInterface
         }
 
         return new JobModel(
-            $job['uuid'],
+            $job['ulid'],
             $job['name'],
             $job['printer']['uri'],
             $job['options'] ?? [],
