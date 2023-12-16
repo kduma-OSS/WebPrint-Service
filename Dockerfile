@@ -43,5 +43,3 @@ ENV CUPS_SERVER="cups:631"
 #VOLUME /tmp/webprint-service-debug-output
 
 CMD [ "php", "./webprint-service", "watch" ]
-
-
