@@ -21,7 +21,7 @@ RUN composer install --no-interaction --no-progress --no-scripts --optimize-auto
 RUN ./webprint-service app:build --build-version=${BUILD_VERSION} --ansi -vvv
 
 
-FROM php:8.1-cli AS runtime
+FROM --platform=$BUILDPLATFORM php:8.1-cli AS runtime
 
 RUN apt-get update \
 	&& apt-get -y install cups-client \
