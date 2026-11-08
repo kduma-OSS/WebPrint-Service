@@ -32,8 +32,7 @@ class CupsProtocol implements PrinterProtocolInterface
 
             case 'ppd':
                 $options = collect($job->options)
-                    ->filter(fn ($value) => ! is_bool($value) || $value === true)
-                    ->map(fn ($value) => is_bool($value) ? null : $value);
+                    ->map(fn ($value) => is_bool($value) ? ($value ? 'True' : 'False') : $value);
                 break;
 
             default:
